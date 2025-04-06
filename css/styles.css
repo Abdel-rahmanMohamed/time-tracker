@@ -1,0 +1,342 @@
+:root {
+    /* Primary color scheme - modify per your preference */
+    --primary-color: #4285f4;
+    --primary-dark: #3367d6;
+    --secondary-color: #34a853;
+    --text-color: #202124;
+    --light-gray: #f1f3f4;
+    --border-color: #dadce0;
+    
+    --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-family);
+    color: var(--text-color);
+    line-height: 1.6;
+    padding-bottom: 60px;
+}
+
+header {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+section {
+    margin-bottom: 2rem;
+    background: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+h1 {
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+h2 {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    color: var(--primary-dark);
+}
+
+h3 {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.2s;
+}
+
+button:hover {
+    background-color: var(--primary-dark);
+}
+
+button:disabled {
+    background-color: var(--border-color);
+    cursor: not-allowed;
+}
+
+input, select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.25rem;
+    font-size: 0.9rem;
+}
+
+/* Timer Section */
+.timer-display {
+    font-size: 3rem;
+    font-weight: 300;
+    text-align: center;
+    margin: 1rem 0;
+    font-variant-numeric: tabular-nums;
+}
+
+.timer-controls {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+/* Activities List */
+.activities-controls {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+#activities-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.activity-item {
+    padding: 0.75rem;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+}
+
+.activity-details {
+    flex-grow: 1;
+}
+
+.activity-time {
+    color: #5f6368;
+    font-size: 0.8rem;
+}
+
+.activity-category {
+    display: inline-block;
+    padding: 0.2rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    margin-right: 0.5rem;
+}
+
+.activity-tag {
+    display: inline-block;
+    background-color: var(--light-gray);
+    padding: 0.2rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    margin-right: 0.25rem;
+}
+
+.activity-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.activity-actions button {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.8rem;
+}
+
+/* Visualizations */
+.chart-container {
+    margin-bottom: 2rem;
+}
+
+#streak-calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.25rem;
+}
+
+.calendar-day {
+    aspect-ratio: 1;
+    background-color: var(--light-gray);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+}
+
+.calendar-day.has-activity {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+/* Modals */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 200;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: white;
+    margin: 10% auto;
+    padding: 1.5rem;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+}
+
+.close-modal {
+    float: right;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.help-text {
+    font-size: 0.8rem;
+    color: #5f6368;
+    margin-top: 0.25rem;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .timer-display {
+        font-size: 2.5rem;
+    }
+    
+    .activities-controls {
+        flex-direction: column;
+    }
+    
+    header {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+    }
+    
+    .user-controls {
+        display: flex;
+        gap: 0.5rem;
+    }
+}
+
+@media (min-width: 768px) {
+    main {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+    
+    #timer-section,
+    #activity-form-section {
+        grid-column: 1;
+    }
+    
+    #activities-section {
+        grid-column: 2;
+        grid-row: span 2;
+    }
+    
+    #visualizations-section {
+        grid-column: 1 / -1;
+    }
+}
+
+/* Add to your styles.css file */
+
+.activities-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.search-row, .date-filter-row {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.date-range-filter {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.date-range-filter label {
+    margin-bottom: 0;
+    font-size: 0.85rem;
+}
+
+.date-range-filter input[type="datetime-local"] {
+    width: auto;
+    flex: 1;
+    min-width: 200px;
+}
+
+#apply-date-filter {
+    background-color: var(--secondary-color);
+}
+
+#clear-date-filter {
+    background-color: #f1f3f4;
+    color: var(--text-color);
+}
+
+#clear-date-filter:hover {
+    background-color: #e8eaed;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .date-range-filter {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .date-range-filter input[type="datetime-local"] {
+        width: 100%;
+    }
+    
+    .date-range-filter button {
+        align-self: stretch;
+    }
+}

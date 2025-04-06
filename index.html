@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#4285f4">
+    <title>TimeTracker</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="img/icons/icon-192x192.png">
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Chart.js for visualizations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <!-- CryptoJS for encryption -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>TimeTracker</h1>
+        <div class="user-controls">
+            <button id="backup-button">Backup Data</button>
+            <button id="import-button">Import Data</button>
+            <button id="settings-button">Settings</button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Timer Section -->
+        <section id="timer-section">
+            <div class="timer-display">
+                <span id="hours">00</span>:<span id="minutes">00</span>:<span id="seconds">00</span>
+            </div>
+            <div class="timer-controls">
+                <button id="start-timer">Start</button>
+                <button id="pause-timer" disabled>Pause</button>
+                <button id="stop-timer" disabled>Stop</button>
+            </div>
+        </section>
+
+        <!-- Activity Form -->
+        <section id="activity-form-section">
+            <h2>Add Activity</h2>
+            <form id="activity-form">
+                <div class="form-group">
+                    <label for="activity-description">Description</label>
+                    <input type="text" id="activity-description" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="activity-start">Start Time</label>
+                    <input type="datetime-local" id="activity-start" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="activity-end">End Time</label>
+                    <input type="datetime-local" id="activity-end" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="activity-category">Category</label>
+                    <select id="activity-category" required>
+                        <option value="">Select category...</option>
+                        <!-- Categories will be populated dynamically -->
+                    </select>
+                    <button type="button" id="add-category-button">+</button>
+                </div>
+                
+                <div class="form-group">
+                    <label for="activity-tags">Tags (comma-separated)</label>
+                    <input type="text" id="activity-tags">
+                </div>
+                
+                <button type="submit">Save Activity</button>
+            </form>
+        </section>
+
+        <!-- Activities List -->
+        <section id="activities-section">
+            <h2>Recent Activities</h2>
+            <!-- Modified Activities Controls Section -->
+            <div class="activities-controls">
+                <div class="search-row">
+                    <input type="text" id="activities-search" placeholder="Search activities...">
+                    <select id="activities-filter">
+                        <option value="">All Categories</option>
+                        <!-- Categories will be populated dynamically -->
+                    </select>
+                    <button id="export-csv">Export CSV</button>
+                </div>
+                
+                <!-- New Date Range Filter -->
+                <div class="date-filter-row">
+                    <div class="date-range-filter">
+                        <label for="date-filter-start">From:</label>
+                        <input type="datetime-local" id="date-filter-start">
+                        <label for="date-filter-end">To:</label>
+                        <input type="datetime-local" id="date-filter-end">
+                        <button id="apply-date-filter">Apply Filter</button>
+                        <button id="clear-date-filter">Clear</button>
+                    </div>
+                </div>
+            </div>
+            <div id="activities-list">
+                <!-- Activities will be populated dynamically -->
+            </div>
+        </section>
+
+        <!-- Visualizations -->
+        <section id="visualizations-section">
+            <h2>Time Analysis</h2>
+            <div class="chart-container">
+                <h3>Time by Category</h3>
+                <canvas id="category-chart"></canvas>
+            </div>
+            <div class="chart-container">
+                <h3>Daily Activity</h3>
+                <canvas id="daily-chart"></canvas>
+            </div>
+            <div class="chart-container">
+                <h3>Activity Streak</h3>
+                <div id="streak-calendar"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modals -->
+    <div id="category-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Add Category</h2>
+            <form id="category-form">
+                <div class="form-group">
+                    <label for="category-name">Category Name</label>
+                    <input type="text" id="category-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="category-color">Color</label>
+                    <input type="color" id="category-color" value="#4285f4">
+                </div>
+                <button type="submit">Save Category</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="settings-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Settings</h2>
+            <form id="settings-form">
+                <div class="form-group">
+                    <label for="encryption-password">Data Encryption Password</label>
+                    <input type="password" id="encryption-password">
+                    <p class="help-text">Setting a password enables encryption of your data. Leave blank for no encryption.</p>
+                </div>
+                <div class="form-group">
+                    <label for="google-drive-backup">Google Drive Backup</label>
+                    <button type="button" id="google-auth" disabled>Connect Google Drive</button>
+                    <div id="google-auth-status">Disabled for initial testing</div>
+                    <p class="help-text">Google Drive backup is disabled for initial testing.</p>
+                </div>
+                <button type="submit">Save Settings</button>
+            </form>
+        </div>
+    </div>
+
+   <!-- Scripts -->
+    <script src="js/encryption.js"></script>
+    <script src="js/db.js"></script>
+    <script src="js/timer.js"></script>
+    <script src="js/export.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/drive-backup.js"></script>
+    <script src="js/app.js"></script>
+    <script src="service-worker.js"></script>
+    <!-- Test data generator (remove for production) -->
+    <script src="js/generate-test-data.js"></script>
+</body>
+</html>
