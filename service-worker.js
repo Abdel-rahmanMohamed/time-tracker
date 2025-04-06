@@ -2,18 +2,18 @@
 
 const CACHE_NAME = 'time-tracker-cache-v1';
 const ASSETS_TO_CACHE = [
-    '/',
-    '/index.html',
-    '/css/styles.css',
-    '/js/app.js',
-    '/js/db.js',
-    '/js/timer.js',
-    '/js/export.js',
-    '/js/charts.js',
-    '/js/encryption.js',
-    '/js/drive-backup.js',
-    '/js/generate-test-data.js',
-    '/manifest.json',
+    './',
+    './index.html',
+    './css/styles.css',
+    './js/app.js',
+    './js/db.js',
+    './js/timer.js',
+    './js/export.js',
+    './js/charts.js',
+    './js/encryption.js',
+    './js/drive-backup.js',
+    './js/generate-test-data.js',
+    './manifest.json',
     // Cache Chart.js and CryptoJS from CDN
     'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js',
     'https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js'
